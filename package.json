@@ -1,0 +1,21 @@
+{
+  "name": "eso-k8s-intergation-demo-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "dev": "node server.js",
+    "build": "node build server.js",
+    "start": "node start"
+  },
+  "type": "module",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.7"
+  }
+}
