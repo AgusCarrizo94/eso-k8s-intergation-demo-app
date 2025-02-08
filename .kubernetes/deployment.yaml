@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eso-k8s-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: eso-k8s-app
+  template:
+    metadata:
+      labels:
+        app: eso-k8s-app
+    spec:
+      containers:
+        - name: eso-k8s-app
+          image: eso-k8s-integration-demo-app:latest
+          ports:
+            - containerPort: 3000
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+          env:
+            - name: USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: username
+            - name: PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: password
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: eso-k8s-app-service
+spec:
+  selector:
+    app: eso-k8s-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+  type: LoadBalancer
