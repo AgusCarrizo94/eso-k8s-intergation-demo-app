@@ -9,12 +9,15 @@ spec:
       app: eso-k8s-app
   template:
     metadata:
+      annotations:
+        reloader.stakater.com/auto: "true"
       labels:
         app: eso-k8s-app
     spec:
       containers:
         - name: eso-k8s-app
-          image: eso-k8s-integration-demo-app:latest
+          image: eso-k8s-integration-demo-app
+          imagePullPolicy: Never
           ports:
             - containerPort: 3000
           resources:
@@ -28,13 +31,13 @@ spec:
             - name: USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: app-secrets
-                  key: username
+                  name: demo-app-secret
+                  key: USERNAME
             - name: PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: app-secrets
-                  key: password
+                  name: demo-app-secret
+                  key: PASSWORD
 ---
 apiVersion: v1
 kind: Service
